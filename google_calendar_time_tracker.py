@@ -62,6 +62,9 @@ def main():
     if not session_type:
         session_type = "Coding Session"
 
+    # Ask for additional description (optional)
+    additional_description = input("Enter additional description (optional): ").strip()
+
     # Wait for the user to input "end" to end the session
     while True:
         user_input = input("Type 'end' to end the session: ")
@@ -75,8 +78,10 @@ def main():
     # Calculate duration
     duration_str = format_duration(start_time, end_time)
 
-    # Create description with elapsed time
-    session_description = f"{duration_str}"
+    # Create description with elapsed time and additional description (if provided)
+    session_description = duration_str
+    if additional_description:
+        session_description += f" - {additional_description}"
 
     # Create event in Google Calendar
     create_calendar_event(service, session_type, session_description, start_time.isoformat(), end_time.isoformat())
