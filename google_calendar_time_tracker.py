@@ -57,13 +57,16 @@ def main():
     print("Session started at:", start_time.strftime("%Y-%m-%d %H:%M:%S"))
     
     # Ask for session type
-    session_type = input("Enter the type of session (e.g., Meeting, Study, etc.): ").strip()
+    session_type = input("Enter the type of session (e.g., Entertainment, Study, Coding...): ").strip()
     if not session_type:
         session_type = "Coding Session"
 
+    # Ask for additional description
+    session_additional_description = input("Enter additional description: ").strip()
+
     # Wait for the user to input "end" to end the session
     while True:
-        user_input = input("Type 'end' to end the session: ")
+        user_input = input("Type 'end' to end current session: ")
         if user_input.lower() == 'end':
             break
 
@@ -74,8 +77,10 @@ def main():
     # Calculate duration
     duration_str = format_duration(start_time, end_time)
 
-    # Create description with elapsed time
+    # Create description with session type, elapsed time, and additional description
     session_description = f"{session_type}: {duration_str}"
+    if session_additional_description:
+        session_description += f" ({session_additional_description})"
 
     # Create event in Google Calendar
     create_calendar_event(service, session_type, session_description, start_time.isoformat(), end_time.isoformat())
