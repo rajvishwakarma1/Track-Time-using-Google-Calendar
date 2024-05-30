@@ -29,7 +29,6 @@ def authenticate_google_calendar():
 def create_calendar_event(service, summary, description, start_time, end_time):
     event = {
         'summary': summary,
-        'description': description,
         'start': {
             'dateTime': start_time,
             'timeZone': 'Asia/Kolkata',  # Use 'Asia/Kolkata' for New Delhi
@@ -39,6 +38,8 @@ def create_calendar_event(service, summary, description, start_time, end_time):
             'timeZone': 'Asia/Kolkata',  # Use 'Asia/Kolkata' for New Delhi
         },
     }
+    if description:
+        event['description'] = description
 
     event = service.events().insert(calendarId='primary', body=event).execute()
     print(f"Event created: {event.get('htmlLink')}")
@@ -61,9 +62,6 @@ def main():
     if not session_type:
         session_type = "Coding Session"
 
-    # Ask for additional description
-    session_additional_description = input("Enter additional description for the session (optional): ").strip()
-
     # Wait for the user to input "end" to end the session
     while True:
         user_input = input("Type 'end' to end the session: ")
@@ -77,10 +75,8 @@ def main():
     # Calculate duration
     duration_str = format_duration(start_time, end_time)
 
-    # Create description with session type, elapsed time, and additional description
-    session_description = f"{session_type}: {duration_str}"
-    if session_additional_description:
-        session_description += f" ({session_additional_description})"
+    # Create description with elapsed time
+    session_description = f"{duration_str}"
 
     # Create event in Google Calendar
     create_calendar_event(service, session_type, session_description, start_time.isoformat(), end_time.isoformat())
