@@ -31,11 +31,11 @@ def create_calendar_event(service, summary, description, start_time, end_time):
         'summary': summary,
         'start': {
             'dateTime': start_time,
-            'timeZone': 'Asia/Kolkata',  # Use 'Asia/Kolkata' for New Delhi
+            'timeZone': 'Asia/Kolkata',
         },
         'end': {
             'dateTime': end_time,
-            'timeZone': 'Asia/Kolkata',  # Use 'Asia/Kolkata' for New Delhi
+            'timeZone': 'Asia/Kolkata',
         },
     }
     if description:
@@ -58,7 +58,7 @@ def main():
     print("Session started at:", start_time.strftime("%Y-%m-%d %H:%M:%S"))
     
     # Ask for session type
-    session_type = input("Enter the type of session (e.g., Meeting, Study, etc.): ").strip()
+    session_type = input("Enter the type of session (e.g., Entertainment, Study, Coding....): ").strip()
     if not session_type:
         session_type = "Coding Session"
 
